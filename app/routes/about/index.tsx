@@ -1,5 +1,3 @@
-export default function Index() {
-	return (
-		<div>About me</div>
-	);
+export default function About() {
+  return <div>About me</div>;
 }

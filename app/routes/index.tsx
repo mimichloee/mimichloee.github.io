@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from '@remix-run/react';
 
 export default function Index() {
   return (
@@ -8,7 +8,7 @@ export default function Index() {
           <Link to="/about">About</Link>
         </li>
         <li>
-          <Link to="/blog">Blog</Link>
+          <Link to="/posts">Blog</Link>
         </li>
       </ul>
     </div>
