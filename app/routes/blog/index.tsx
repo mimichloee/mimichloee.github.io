@@ -1,5 +1,3 @@
-export default function Index() {
-	return (
-		<div>Blog main</div>
-	);
+export default function Blog() {
+  return <div>Blog main</div>;
 }
