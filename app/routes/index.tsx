@@ -8,7 +8,7 @@ export default function Index() {
           <Link to="/about">About</Link>
         </li>
         <li>
-          <Link to="/blog">Blog</Link>
+          <Link to="/posts">Posts</Link>
         </li>
       </ul>
     </div>
