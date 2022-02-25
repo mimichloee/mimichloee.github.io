@@ -36,7 +36,7 @@
     "prettier:fix": "prettier --write .",
     "lint": "eslint --ext .tsx,.ts .",
     "lint:fix": "eslint --ext .tsx,.ts . --fix",
-    "prepare": "husky install"
+    "prepare": "husky install && cp -a .husky/. .git/hooks/"
   },
   "lint-staged": {
     "./app/**/*.{ts,tsx}": [

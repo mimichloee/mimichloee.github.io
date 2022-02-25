@@ -1,1 +1,1 @@
-# mimichloee's tech blog
+# chloe's tech blog
