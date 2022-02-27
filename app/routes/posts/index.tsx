@@ -1,18 +1,18 @@
 import { Link, useLoaderData } from 'remix';
-import { getPosts, Post } from '~/post';
+import { getPosts, PostListItem } from '~/posts.server';
 
 export const loader = async () => {
   return getPosts();
 };
 
 function Posts() {
-  const posts = useLoaderData<Post[]>();
+  const posts = useLoaderData<PostListItem[]>();
 
   return (
     <div className="posts">
       <h1>chloe's Posts</h1>
       <ul>
-        {posts.map((post: Post) => (
+        {posts.map((post: PostListItem) => (
           <li key={post.slug}>
             <Link to={post.slug}>{post.title}</Link>
           </li>

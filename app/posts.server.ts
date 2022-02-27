@@ -2,11 +2,17 @@ import path from 'path';
 import fs from 'fs/promises';
 import parseFrontMatter from 'front-matter';
 import invariant from 'tiny-invariant';
+import { bundleMDX } from 'mdx-bundler';
 
-export type Post = {
+export type PostListItem = {
   slug: string;
   title: string;
-  date: string;
+};
+
+export type PostItem = {
+  slug: string;
+  frontmatter: Record<string, any>;
+  code: string;
 };
 
 export type PostMarkdownAttributes = {
@@ -27,7 +33,7 @@ export async function getPosts() {
     dir.map(async (filename) => {
       const file = await fs.readFile(path.join(postsPath, filename));
 
-      const { attributes } = parseFrontMatter<Post>(file.toString());
+      const { attributes } = parseFrontMatter<PostListItem>(file.toString());
 
       invariant(
         isValidPostAttributes(attributes),
@@ -44,17 +50,27 @@ export async function getPosts() {
 
 export async function getPost(slug: string) {
   const filePath = path.join(postsPath, slug + '.mdx');
-  const file = await fs.readFile(filePath);
-  const { attributes } = parseFrontMatter<Post>(file.toString());
+  const source = await fs.readFile(filePath, 'utf-8');
 
-  invariant(
-    isValidPostAttributes(attributes),
-    `Post ${filePath} is missing attributes`,
-  );
+  const { default: remarkSlug } = await import('remark-slug');
+  const { default: remarkPrism } = await import('remark-prism');
+
+  const { code, frontmatter } = await bundleMDX({
+    source,
+    xdmOptions: (options) => {
+      options.remarkPlugins = [
+        ...(options?.remarkPlugins ?? []),
+        remarkSlug,
+        remarkPrism as any,
+      ];
+      options.rehypePlugins = [...(options?.rehypePlugins ?? [])];
+      return options;
+    },
+  });
 
   return {
     slug,
-    title: attributes.title,
-    date: attributes.date,
-  };
+    frontmatter,
+    code,
+  } as PostItem;
 }
