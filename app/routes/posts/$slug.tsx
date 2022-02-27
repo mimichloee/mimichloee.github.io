@@ -17,6 +17,7 @@ export default function PostSlug() {
           <li>{post.date}</li>
         </ul>
       </section>
+      <div>content</div>
     </div>
   );
 }
