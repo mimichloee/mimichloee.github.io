@@ -36,10 +36,10 @@
     "build": "cross-env NODE_ENV=production remix build",
     "dev": "cross-env NODE_ENV=development remix dev",
     "type-check": "tsc -p tsconfig.json",
-    "prettier": "prettier --check .",
-    "prettier:fix": "prettier --write .",
-    "lint": "eslint --ext .tsx,.ts .",
-    "lint:fix": "eslint --ext .tsx,.ts . --fix",
+    "prettier": "prettier --check \"**/*.{ts,tsx,mdx}\"",
+    "prettier:fix": "prettier --write \"**/*.{ts,tsx,mdx}\"",
+    "lint": "eslint \"./app/**/*.{ts,tsx}\"",
+    "lint:fix": "eslint --fix \"./app/**/*.{ts,tsx}\"",
     "prepare": "husky install && cp -a .husky/. .git/hooks/"
   },
   "lint-staged": {

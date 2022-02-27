@@ -6,6 +6,7 @@ import invariant from 'tiny-invariant';
 export type Post = {
   slug: string;
   title: string;
+  date: string;
 };
 
 export type PostMarkdownAttributes = {
@@ -44,7 +45,7 @@ export async function getPosts() {
 export async function getPost(slug: string) {
   const filePath = path.join(postsPath, slug + '.mdx');
   const file = await fs.readFile(filePath);
-  const { attributes } = parseFrontMatter(file.toString());
+  const { attributes } = parseFrontMatter<Post>(file.toString());
 
   invariant(
     isValidPostAttributes(attributes),
@@ -54,5 +55,6 @@ export async function getPost(slug: string) {
   return {
     slug,
     title: attributes.title,
+    date: attributes.date,
   };
 }
