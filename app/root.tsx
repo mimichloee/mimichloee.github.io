@@ -1,5 +1,6 @@
 import {
   Links,
+  LinksFunction,
   LiveReload,
   Meta,
   Outlet,
@@ -7,9 +8,19 @@ import {
   ScrollRestoration,
 } from 'remix';
 import type { MetaFunction } from 'remix';
+import globalStyle from '~/styles/global.css';
 
 export const meta: MetaFunction = () => {
   return { title: 'New Remix App' };
+};
+
+export const links: LinksFunction = () => {
+  return [
+    {
+      rel: 'styleshee',
+      href: globalStyle,
+    },
+  ];
 };
 
 export default function App() {
@@ -21,7 +32,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="bg-white transition duration-500 dark:bg-gray-900">
         <Outlet />
         <ScrollRestoration />
         <Scripts />

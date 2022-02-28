@@ -3,15 +3,21 @@ import { useMemo } from 'react';
 import invariant from 'tiny-invariant';
 import { getPost, PostItem } from '~/posts.server';
 import { getMDXComponent } from 'mdx-bundler/client';
+import { LinksFunction } from 'remix';
+
 import dark from 'prismjs/themes/prism-twilight.min.css';
+import postStyle from '~/styles/post.css';
 
 export const loader = async ({ params }: any) => {
   invariant(params.slug, 'expected params.slug');
   return getPost(params.slug);
 };
 
-export const links = () => {
-  return [{ rel: 'stylesheet', href: dark }];
+export const links: LinksFunction = () => {
+  return [
+    { rel: 'stylesheet', href: dark },
+    { rel: 'stylesheet', href: postStyle },
+  ];
 };
 
 export default function PostSlug() {
