@@ -1,16 +1,9 @@
-import { Link } from 'react-router-dom';
+import { Outlet } from 'remix';
 
 export default function Index() {
   return (
-    <div style={{ fontFamily: 'system-ui, sans-serif', lineHeight: '1.4' }}>
-      <ul>
-        <li>
-          <Link to="/about">About</Link>
-        </li>
-        <li>
-          <Link to="/posts">Posts</Link>
-        </li>
-      </ul>
+    <div className="container">
+      <Outlet />
     </div>
   );
 }
