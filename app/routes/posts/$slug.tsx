@@ -5,7 +5,7 @@ import { getPost, PostItem } from '~/posts.server';
 import { getMDXComponent } from 'mdx-bundler/client';
 import { LinksFunction } from 'remix';
 
-import dark from 'prismjs/themes/prism-twilight.min.css';
+import dark from 'prism-themes/themes/prism-material-oceanic.min.css';
 import postStyle from '~/styles/post.css';
 
 export const loader = async ({ params }: any) => {
@@ -25,16 +25,22 @@ export default function PostSlug() {
   const Component = useMemo(() => getMDXComponent(post.code), [post.code]);
 
   return (
-    <div>
-      <h1>{post.frontmatter.title}</h1>
-      <section>
+    <div className="p-8 relative max-w-5xl m-auto">
+      <section className="pt-10 pb-20 flex flex-col">
+        <h1 className="pb-4 font-bold text-3xl md:text-4xl text-black dark:text-white">
+          {post.frontmatter.title}
+        </h1>
         <ul>
-          <li>{post.frontmatter.date}</li>
+          <li className="font-small text-gray-400 dark:text-blueGray-500">
+            {post.frontmatter.date}
+          </li>
         </ul>
       </section>
-      <article>
-        <Component />
-      </article>
+      <section>
+        <article className="prose max-w-none prose-light dark:prose-dark">
+          <Component />
+        </article>
+      </section>
     </div>
   );
 }

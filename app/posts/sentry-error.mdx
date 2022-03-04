@@ -3,14 +3,43 @@ title: 'Sentry로 우아하게 에러 추적하기'
 date: '2022-02-25'
 ---
 
+# 장애(Incident)
+
+장애라는 단어는 겪을 때마다 적응이 안되는 단어이면서 상황이다.
+"페이지가 안떠요" 또는 "특정 디바이스에서 동작하지 않아요" 와 같은 CS를 받게 되면 심장박동이 크게 증가한다.
+혹여나 내가 작성한 코드가 잘못된 것이 아닐까 하는 조바심과 불안감 때문일 것이다.
+
+서비스를 제공하는 기업의 입장에서 대형 서비스 장애는 매출 하락으로 이어질 수도 있고 또한 사용자와 쌓아왔던 신뢰를 잃을 수도 있다.
+그만큼 장애 탐지와 대응은 신속하고 정확하게 이루어져야 한다. 장애 탐지와 대응은 backend 고유의 영역으로 여겨져 오기도 했던 것 같다.
+장애의 원인은 파악하기 전까진 인프라의 이슈인지 데이터의 이슈인지 화면의 이슈인지 알 수가 없다.
+(필자는 여러 가지 종류의 장애를 겪어봤는데 제일 기억에 남았던 장애는 내가 배치 배포를 제대로 안해서 다음날 사용자에게 push를 가게 만든 장애가 제일 기억에 남는다.)
+
+서비스의 복잡도가 증가하고 있는 요즘, frontend에서도 장애에 대한 탐지나 파악을 조금씩 깊히 들여다 봐야할 때가 오지 않았나 생각한다.
+그러면, frontend에서(특히 웹뷰환경)에서 발생하는 장애는 어떤 방법으로 탐지하고 파악하여 해결할 수 있을까?
+
+# 장애의 종류
+
 # Sentry
 
-에러처리!!!
+> Working Code, Happy Customers
 
-```tsx
-<div>12345</div>
+```sh
+npm i react
 ```
 
-```js
-const a = 10;
+```ts
+import * as Sentry from '@sentry/browser';
+
+export function initSentry() {
+  Sentry.init({
+    dsn: 'dsn key',
+    release: 'release version',
+    environment: 'production',
+    integrations: [
+      new Sentry.Integrations.Breadcrumbs({
+        console: true,
+      }),
+    ],
+  });
+}
 ```

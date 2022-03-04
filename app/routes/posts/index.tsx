@@ -9,8 +9,7 @@ function Posts() {
   const posts = useLoaderData<PostListItem[]>();
 
   return (
-    <div className="posts">
-      <h1>chloe's Posts</h1>
+    <div className="posts p-8">
       <ul>
         {posts.map((post: PostListItem) => (
           <li key={post.slug}>

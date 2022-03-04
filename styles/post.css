@@ -1,4 +1,10 @@
 pre[class*='language-'] {
   border: none;
+  border-radius: 4px;
+}
+
+code[class*='language-'] {
   font-size: 13px;
+  line-height: 1em;
+  font-family: 'JetBrains Mono';
 }
