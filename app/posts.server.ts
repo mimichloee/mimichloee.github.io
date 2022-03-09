@@ -50,13 +50,12 @@ export async function getPosts() {
 
 export async function getPost(slug: string) {
   const filePath = path.join(postsPath, slug + '.mdx');
-  const source = await fs.readFile(filePath, 'utf-8');
 
   const { default: remarkSlug } = await import('remark-slug');
   const { default: remarkPrism } = await import('remark-prism');
 
   const { code, frontmatter } = await bundleMDX({
-    source,
+    file: filePath,
     xdmOptions: (options) => {
       options.remarkPlugins = [
         ...(options?.remarkPlugins ?? []),
