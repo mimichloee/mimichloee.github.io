@@ -37,6 +37,17 @@ module.exports = {
                   marginTop: 0,
                   marginBottom: theme('spacing.8'),
                 },
+                blockquote: {
+                  fontWeight: theme('fontWeight.normal'),
+                  border: 'none',
+                  borderRadius: theme('borderRadius.lg'),
+                  padding: theme('spacing.4'),
+                  marginTop: 0,
+                  marginBottom: theme('spacing.10'),
+                },
+                'blockquote > :last-child': {
+                  marginBottom: 0,
+                },
               }
             ]
           },
@@ -49,7 +60,11 @@ module.exports = {
                 },
                 'h1, h2, h3, h4, h5, h6': {
                   color: theme('colors.black'),
-                }
+                },
+                blockquote: {
+                  color: theme('colors.gray.500'),
+                  backgroundColor: theme('colors.gray.100'),
+                },
               }
             ]
           },
@@ -62,7 +77,11 @@ module.exports = {
                 },
                 'h1, h2, h3, h4, h5, h6': {
                   color: theme('colors.gray.200'),
-                }
+                },
+                blockquote: {
+                  color: theme('colors.blueGray.500'),
+                  backgroundColor: theme('colors.gray.800'),
+                },
               }
             ]
           }
