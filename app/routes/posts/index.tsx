@@ -1,5 +1,7 @@
 import path from 'path';
 
+const __dirname = path.resolve();
+
 function Posts() {
   const postsPath = path.join(__dirname, '../app', 'posts');
   console.log('postPath', postsPath);
