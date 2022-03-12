@@ -20,7 +20,7 @@ export type PostMarkdownAttributes = {
 };
 
 const __dirname = path.resolve();
-const postsPath = path.join(__dirname, '../app', 'posts');
+const postsPath = path.join(__dirname, 'posts');
 
 function isValidPostAttributes(
   attributes: any,
