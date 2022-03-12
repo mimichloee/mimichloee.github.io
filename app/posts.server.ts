@@ -19,9 +19,6 @@ export type PostMarkdownAttributes = {
   title: string;
 };
 
-const __dirname = path.resolve();
-const postsPath = path.join(__dirname, 'posts');
-
 function isValidPostAttributes(
   attributes: any,
 ): attributes is PostMarkdownAttributes {
@@ -29,7 +26,9 @@ function isValidPostAttributes(
 }
 
 export async function getPosts() {
+  const postsPath = path.join(path.resolve(), 'posts');
   const dir = await fs.readdir(postsPath);
+
   return Promise.all(
     dir.map(async (filename) => {
       const file = await fs.readFile(path.join(postsPath, filename));
@@ -50,6 +49,7 @@ export async function getPosts() {
 }
 
 export async function getPost(slug: string) {
+  const postsPath = path.join(path.resolve(), 'posts');
   const filePath = path.join(postsPath, slug + '.mdx');
 
   const { default: remarkSlug } = await import('remark-slug');
