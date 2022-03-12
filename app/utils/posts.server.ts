@@ -26,7 +26,7 @@ function isValidPostAttributes(
 }
 
 export async function getPosts() {
-  const postsPath = path.join(path.resolve(), 'posts');
+  const postsPath = path.join(__dirname, '../app', 'posts');
   const dir = await fs.readdir(postsPath);
 
   return Promise.all(
@@ -49,7 +49,7 @@ export async function getPosts() {
 }
 
 export async function getPost(slug: string) {
-  const postsPath = path.join(path.resolve(), 'posts');
+  const postsPath = path.join(__dirname, '../app', 'posts');
   const filePath = path.join(postsPath, slug + '.mdx');
 
   const { default: remarkSlug } = await import('remark-slug');

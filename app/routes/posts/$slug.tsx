@@ -1,7 +1,7 @@
 import { useLoaderData } from '@remix-run/react';
 import { useMemo } from 'react';
 import invariant from 'tiny-invariant';
-import { getPost, PostItem } from '~/posts.server';
+import { getPost, PostItem } from '~/utils/posts.server';
 import { getMDXComponent } from 'mdx-bundler/client';
 import { LinksFunction } from 'remix';
 
