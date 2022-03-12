@@ -1,19 +1,21 @@
-import path from 'path';
+import { Link, useLoaderData } from 'remix';
+import { getPosts, PostListItem } from '~/posts.server';
 
-const __dirname = path.resolve();
+export const loader = async () => {
+  return getPosts();
+};
 
 function Posts() {
-  const postsPath = path.join(__dirname, '../app', 'posts');
-  console.log('postPath', postsPath);
+  const posts = useLoaderData<PostListItem[]>();
 
   return (
     <div className="posts p-8">
       <ul>
-        {/* {posts.map((post: PostListItem) => (
+        {posts.map((post: PostListItem) => (
           <li key={post.slug}>
             <Link to={post.slug}>{post.title}</Link>
           </li>
-        ))} */}
+        ))}
       </ul>
     </div>
   );
