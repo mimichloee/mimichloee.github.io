@@ -1,4 +1,5 @@
 import path from 'path';
+import fs from 'fs/promises';
 import { bundleMDX } from 'mdx-bundler';
 
 export type PostListItem = {
@@ -18,13 +19,16 @@ export type PostMarkdownAttributes = {
 
 export async function getPost(slug: string) {
   const pathToPosts = `${__dirname}/../../posts`;
-  const filePath = path.join(pathToPosts, slug + '.mdx');
+  const source = await fs.readFile(
+    path.join(pathToPosts, slug + '.mdx'),
+    'utf-8',
+  );
 
   const { default: remarkSlug } = await import('remark-slug');
   const { default: remarkPrism } = await import('remark-prism');
 
   const { code, frontmatter } = await bundleMDX({
-    file: filePath,
+    source,
     xdmOptions: (options) => {
       options.remarkPlugins = [
         ...(options?.remarkPlugins ?? []),
