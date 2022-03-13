@@ -1,7 +1,4 @@
 import path from 'path';
-import fs from 'fs/promises';
-import parseFrontMatter from 'front-matter';
-import invariant from 'tiny-invariant';
 import { bundleMDX } from 'mdx-bundler';
 
 export type PostListItem = {
@@ -26,35 +23,35 @@ const mdxPath =
 
 console.log('__dirname', __dirname, mdxPath);
 
-function isValidPostAttributes(
-  attributes: any,
-): attributes is PostMarkdownAttributes {
-  return attributes?.title;
-}
+// function isValidPostAttributes(
+//   attributes: any,
+// ): attributes is PostMarkdownAttributes {
+//   return attributes?.title;
+// }
 
-export async function getPosts() {
-  const postsPath = await fs.readdir(mdxPath, {
-    withFileTypes: true,
-  });
+// export async function getPosts() {
+//   const postsPath = await fs.readdir(mdxPath, {
+//     withFileTypes: true,
+//   });
 
-  return Promise.all(
-    postsPath.map(async (dirnet) => {
-      const file = await fs.readFile(path.join(mdxPath, dirnet.name));
+//   return Promise.all(
+//     postsPath.map(async (dirnet) => {
+//       const file = await fs.readFile(path.join(mdxPath, dirnet.name));
 
-      const { attributes } = parseFrontMatter<PostListItem>(file.toString());
+//       const { attributes } = parseFrontMatter<PostListItem>(file.toString());
 
-      invariant(
-        isValidPostAttributes(attributes),
-        `${dirnet.name} has bad meta data!`,
-      );
+//       invariant(
+//         isValidPostAttributes(attributes),
+//         `${dirnet.name} has bad meta data!`,
+//       );
 
-      return {
-        slug: dirnet.name.replace(/\.mdx$/, ''),
-        title: attributes.title,
-      };
-    }),
-  );
-}
+//       return {
+//         slug: dirnet.name.replace(/\.mdx$/, ''),
+//         title: attributes.title,
+//       };
+//     }),
+//   );
+// }
 
 export async function getPost(slug: string) {
   const filePath = path.join(mdxPath, slug + '.mdx');
