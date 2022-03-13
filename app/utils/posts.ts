@@ -22,9 +22,7 @@ export async function getPosts(): Promise<PostListItem[]> {
   // const readDir1 = await fs.readdir(path.join(`${__dirname}`, '../../../..'));
   // console.log('readDir1', JSON.stringify(readDir1));
 
-  const readDir2 = await fs.readdir(
-    '/var/task/output/server/pages/api/_build/../../posts',
-  );
+  const readDir2 = await fs.readdir('/var/task/output');
   console.log('readDir2', JSON.stringify(readDir2));
 
   const allPostFiles = await fs.readdir(pathToPosts);
