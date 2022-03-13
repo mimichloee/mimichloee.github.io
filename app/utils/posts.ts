@@ -18,7 +18,7 @@ export async function getPosts(): Promise<PostListItem[]> {
       ? path.join(__dirname, '../..', 'posts')
       : path.join(__dirname, '..', 'posts');
 
-  console.log('postsPath', __dirname, pathToPosts);
+  console.log('postsPath', __dirname, pathToPosts, `${__dirname}/../../posts`);
 
   const allPostFiles = await fs.readdir(pathToPosts);
 
