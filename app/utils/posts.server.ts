@@ -19,7 +19,14 @@ export type PostMarkdownAttributes = {
   title: string;
 };
 
-// const __dirname = path.resolve();
+const __dirname = path.resolve();
+
+const mdxPath =
+  process.env.NODE_ENV === 'production'
+    ? `${__dirname}/../../app/posts`
+    : `${__dirname}/app/posts`;
+
+console.log('__dirname', __dirname, mdxPath);
 
 function isValidPostAttributes(
   attributes: any,
@@ -28,15 +35,13 @@ function isValidPostAttributes(
 }
 
 export async function getPosts() {
-  const postsPath = await fs.readdir(`${process.cwd()}/posts`, {
+  const postsPath = await fs.readdir(mdxPath, {
     withFileTypes: true,
   });
 
   return Promise.all(
     postsPath.map(async (dirnet) => {
-      const file = await fs.readFile(
-        path.join(`${process.cwd()}/posts`, dirnet.name),
-      );
+      const file = await fs.readFile(path.join(mdxPath, dirnet.name));
 
       const { attributes } = parseFrontMatter<PostListItem>(file.toString());
 
@@ -54,8 +59,7 @@ export async function getPosts() {
 }
 
 export async function getPost(slug: string) {
-  const pathToPosts = `${process.cwd()}/posts`;
-  const filePath = path.join(pathToPosts, slug + '.mdx');
+  const filePath = path.join(mdxPath, slug + '.mdx');
 
   const { default: remarkSlug } = await import('remark-slug');
   const { default: remarkPrism } = await import('remark-prism');
