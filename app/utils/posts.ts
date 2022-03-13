@@ -13,12 +13,14 @@ type PostMarkdownAttributes = {
 };
 
 export async function getPosts(): Promise<PostListItem[]> {
-  const pathToPosts =
-    process.env.NODE_ENV === 'production'
-      ? `${__dirname}/../../posts`
-      : path.join(__dirname, '..', 'posts');
+  const pathToPosts = path.join(__dirname, '..', 'posts');
 
-  console.log('postsPath', __dirname, pathToPosts, `${__dirname}/../../posts`);
+  console.log('dirname', __dirname);
+  console.log('dirname', path.join(__dirname, '..'));
+  console.log('pathToPosts', pathToPosts);
+
+  const readCurrentDir = await fs.readdir(path.join(`${__dirname}`, '..'));
+  console.log('current dir', JSON.stringify(readCurrentDir));
 
   const allPostFiles = await fs.readdir(pathToPosts);
 
