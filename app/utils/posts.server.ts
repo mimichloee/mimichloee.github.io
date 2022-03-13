@@ -1,7 +1,6 @@
 import path from 'path';
 import fs from 'fs/promises';
 import { bundleMDX } from 'mdx-bundler';
-// import readingTime from 'reading-time';
 
 export type PostItem = {
   slug: string;
@@ -35,8 +34,6 @@ export async function getPost(slug: string) {
       return options;
     },
   });
-
-  // const { text } = readingTime(code);
 
   return {
     slug,
