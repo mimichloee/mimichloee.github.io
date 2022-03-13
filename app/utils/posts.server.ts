@@ -21,8 +21,8 @@ export type PostMarkdownAttributes = {
 
 const mdxPath =
   process.env.NODE_ENV === 'production'
-    ? path.join(__dirname, '../../../posts')
-    : path.join(__dirname, '../posts');
+    ? path.join(__dirname, '../../app', 'posts')
+    : path.join(__dirname, '../app', 'posts');
 
 console.log('__dirname', __dirname, mdxPath);
 
