@@ -15,7 +15,7 @@ type PostMarkdownAttributes = {
 export async function getPosts(): Promise<PostListItem[]> {
   const pathToPosts =
     process.env.NODE_ENV === 'production'
-      ? path.join(__dirname, '../..', 'posts')
+      ? `${__dirname}/../../posts`
       : path.join(__dirname, '..', 'posts');
 
   console.log('postsPath', __dirname, pathToPosts, `${__dirname}/../../posts`);
