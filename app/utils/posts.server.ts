@@ -1,19 +1,12 @@
 import path from 'path';
 import fs from 'fs/promises';
 import { bundleMDX } from 'mdx-bundler';
-import readingTime from 'reading-time';
-
-export type PostListItem = {
-  slug: string;
-  title: string;
-  readTime: string;
-};
+// import readingTime from 'reading-time';
 
 export type PostItem = {
   slug: string;
   frontmatter: Record<string, any>;
   code: string;
-  readTime: string;
 };
 
 export type PostMarkdownAttributes = {
@@ -43,12 +36,11 @@ export async function getPost(slug: string) {
     },
   });
 
-  const { text } = readingTime(code);
+  // const { text } = readingTime(code);
 
   return {
     slug,
     frontmatter,
     code,
-    readTime: text,
   } as PostItem;
 }

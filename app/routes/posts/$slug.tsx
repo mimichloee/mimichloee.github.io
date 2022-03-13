@@ -37,9 +37,6 @@ export default function PostSlug() {
           <li className="font-small text-gray-400 dark:text-blueGray-500">
             {post.frontmatter.date}
           </li>
-          <li className="font-small text-gray-400 dark:text-blueGray-500">
-            {post.readTime}
-          </li>
         </ul>
       </section>
       <section>
