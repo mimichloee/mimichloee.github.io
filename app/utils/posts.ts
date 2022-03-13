@@ -13,18 +13,7 @@ type PostMarkdownAttributes = {
 };
 
 export async function getPosts(): Promise<PostListItem[]> {
-  const pathToPosts = path.join(__dirname, '..', 'posts');
-
-  console.log('dirname', __dirname);
-  console.log('dirname', path.join(__dirname, '..'));
-  console.log('pathToPosts', pathToPosts);
-
-  // const readDir1 = await fs.readdir(path.join(`${__dirname}`, '../../../..'));
-  // console.log('readDir1', JSON.stringify(readDir1));
-
-  const readDir2 = await fs.readdir('/var/task/output');
-  console.log('readDir2', JSON.stringify(readDir2));
-
+  const pathToPosts = path.join(__dirname, '../..', 'posts');
   const allPostFiles = await fs.readdir(pathToPosts);
 
   const posts = await Promise.all(
