@@ -13,7 +13,7 @@ type PostMarkdownAttributes = {
 };
 
 export async function getPosts(): Promise<PostListItem[]> {
-  const pathToPosts = path.join(__dirname, '../..', 'posts');
+  const pathToPosts = `${__dirname}/../../posts`;
   const allPostFiles = await fs.readdir(pathToPosts);
 
   const posts = await Promise.all(
