@@ -28,14 +28,14 @@ function isValidPostAttributes(
 }
 
 export async function getPosts() {
-  const postsPath = await fs.readdir(`${process.cwd()}/app/posts`, {
+  const postsPath = await fs.readdir(`${process.cwd()}/posts`, {
     withFileTypes: true,
   });
 
   return Promise.all(
     postsPath.map(async (dirnet) => {
       const file = await fs.readFile(
-        path.join(`${process.cwd()}/app/posts`, dirnet.name),
+        path.join(`${process.cwd()}/posts`, dirnet.name),
       );
 
       const { attributes } = parseFrontMatter<PostListItem>(file.toString());
@@ -54,7 +54,7 @@ export async function getPosts() {
 }
 
 export async function getPost(slug: string) {
-  const pathToPosts = `${process.cwd()}/app/posts`;
+  const pathToPosts = `${process.cwd()}/posts`;
   const filePath = path.join(pathToPosts, slug + '.mdx');
 
   const { default: remarkSlug } = await import('remark-slug');
