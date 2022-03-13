@@ -17,7 +17,7 @@ export type PostMarkdownAttributes = {
 };
 
 export async function getPost(slug: string) {
-  const pathToPosts = path.join(__dirname, '../..', 'posts');
+  const pathToPosts = `${__dirname}/../../posts`;
   const filePath = path.join(pathToPosts, slug + '.mdx');
 
   const { default: remarkSlug } = await import('remark-slug');
