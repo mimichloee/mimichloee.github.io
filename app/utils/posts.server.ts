@@ -19,8 +19,7 @@ export type PostMarkdownAttributes = {
   title: string;
 };
 
-const __dirname = path.resolve();
-console.log('__dirname', __dirname);
+// const __dirname = path.resolve();
 
 function isValidPostAttributes(
   attributes: any,
@@ -29,22 +28,25 @@ function isValidPostAttributes(
 }
 
 export async function getPosts() {
-  const postsPath = path.join(__dirname, 'app', 'posts');
-  const dir = await fs.readdir(postsPath);
+  const postsPath = await fs.readdir(`${process.cwd()}/app/posts`, {
+    withFileTypes: true,
+  });
 
   return Promise.all(
-    dir.map(async (filename) => {
-      const file = await fs.readFile(path.join(postsPath, filename));
+    postsPath.map(async (dirnet) => {
+      const file = await fs.readFile(
+        path.join(`${process.cwd()}/app/posts`, dirnet.name),
+      );
 
       const { attributes } = parseFrontMatter<PostListItem>(file.toString());
 
       invariant(
         isValidPostAttributes(attributes),
-        `${filename} has bad meta data!`,
+        `${dirnet.name} has bad meta data!`,
       );
 
       return {
-        slug: filename.replace(/\.mdx$/, ''),
+        slug: dirnet.name.replace(/\.mdx$/, ''),
         title: attributes.title,
       };
     }),
@@ -52,8 +54,8 @@ export async function getPosts() {
 }
 
 export async function getPost(slug: string) {
-  const postsPath = path.join(__dirname, 'app', 'posts');
-  const filePath = path.join(postsPath, slug + '.mdx');
+  const pathToPosts = `${process.cwd()}/app/posts`;
+  const filePath = path.join(pathToPosts, slug + '.mdx');
 
   const { default: remarkSlug } = await import('remark-slug');
   const { default: remarkPrism } = await import('remark-prism');
