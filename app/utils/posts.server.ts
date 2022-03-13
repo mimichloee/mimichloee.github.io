@@ -19,12 +19,10 @@ export type PostMarkdownAttributes = {
   title: string;
 };
 
-const __dirname = path.resolve();
-
 const mdxPath =
   process.env.NODE_ENV === 'production'
-    ? `${__dirname}/../../app/posts`
-    : `${__dirname}/app/posts`;
+    ? path.join(__dirname, '../../posts')
+    : path.join(__dirname, '../posts');
 
 console.log('__dirname', __dirname, mdxPath);
 
