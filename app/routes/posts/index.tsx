@@ -24,7 +24,7 @@ function Posts() {
               </dt>
               <dd>
                 <p className="pb-2 text-xs md:text-sm text-gray-400">
-                  {post.date} ({post.readTime})
+                  {post.date}
                 </p>
                 <h3 className="pb-4 text-xl md:text-2xl text-teal-500 dark:text-teal-400 font-medium">
                   {post.title}
