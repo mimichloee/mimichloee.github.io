@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import invariant from 'tiny-invariant';
 import { getPost, PostItem } from '~/utils/posts.server';
 import { getMDXComponent } from 'mdx-bundler/client';
-import { LinksFunction } from 'remix';
+import { LinksFunction, Link } from 'remix';
 
 import dark from 'prism-themes/themes/prism-material-oceanic.min.css';
 import postStyle from '~/styles/post.css';
@@ -26,13 +26,19 @@ export default function PostSlug() {
 
   return (
     <div className="p-8 relative max-w-5xl m-auto">
-      <section className="pt-10 pb-20 flex flex-col">
-        <h1 className="pb-4 font-bold text-3xl md:text-4xl text-black dark:text-white">
+      <p>
+        <Link to="/posts">back to posts</Link>
+      </p>
+      <section className="pt-10 pb-15 md:pb-16 flex flex-col">
+        <h1 className="pb-4 font-bold text-3xl md:text-4xl text-teal-500 dark:text-teal-400">
           {post.frontmatter.title}
         </h1>
         <ul>
           <li className="font-small text-gray-400 dark:text-blueGray-500">
             {post.frontmatter.date}
+          </li>
+          <li className="font-small text-gray-400 dark:text-blueGray-500">
+            {post.readTime}
           </li>
         </ul>
       </section>

@@ -1,16 +1,51 @@
 ---
-title: 'React Types'
-date: '2022-02-25'
+title: 'ReactNode vs ReactElement vs JSX.Element (작성중)'
+date: '2022-03-01'
+excerpt: '타입스크립트 사용 시 컴포넌트의 타입은 어떤 타입으로 지정해주어야 할까?'
+tags: ['react', 'typescript']
 ---
 
-## JSX.Element vs React.ReactNode
+# 컴포넌트 타입
 
-react types!! `react types`
+# ReactElement
 
-```tsx
-<div>12345</div>
+```ts
+interface ReactElement<
+  P = any,
+  T extends string | JSXElementConstructor<any> =
+    | string
+    | JSXElementConstructor<any>,
+> {
+  type: T;
+  props: P;
+  key: Key | null;
+}
 ```
 
-```js
-const a = 10;
+# ReactNode
+
+```ts
+type ReactText = string | number;
+type ReactChild = ReactElement | ReactText;
+
+interface ReactNodeArray extends Array<ReactNode> {}
+type ReactFragment = {} | ReactNodeArray;
+
+type ReactNode =
+  | ReactChild
+  | ReactFragment
+  | ReactPortal
+  | boolean
+  | null
+  | undefined;
+```
+
+# JSX.Element
+
+```ts
+declare global {
+  namespace JSX {
+    interface Element extends React.ReactElement<any, any> {}
+  }
+}
 ```

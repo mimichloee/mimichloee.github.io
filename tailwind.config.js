@@ -20,20 +20,22 @@ module.exports = {
             css: [
               { 
                 'h1': {
-                  fontSize: '26px',
+                  fontSize: theme('fontSize.2xl'),
                   fontWeight: '500',
-                  paddingTop: '10px',
+                  paddingTop: theme('spacing.10'),
                   paddingBottom: '10px',
-                  borderBottomWidth: '1px',
-                  borderStyle: theme('border.solid')
+                  [`@media (min-width: ${theme('screens.lg')})`]: {
+                    fontSize: theme('fontSize.3xl'),
+                  },
                 },
                 'h2': {
-                  fontSize: '20px'
-                },
-                'h3': {
-                  fontSize: '16px'
+                  fontSize: theme('fontSize.lg'),
+                  [`@media (min-width: ${theme('screens.lg')})`]: {
+                    fontSize: theme('fontSize.xl'),
+                  },
                 },
                 p: {
+                  letterSpacing: '-0.3px',
                   marginTop: 0,
                   marginBottom: theme('spacing.8'),
                 },
@@ -45,6 +47,17 @@ module.exports = {
                   marginTop: 0,
                   marginBottom: theme('spacing.10'),
                 },
+                'blockquote p:first-of-type::before': false,
+                'blockquote p:last-of-type::after': false,
+                'code::before': false,
+                'code::after': false,
+                'code:not(pre code)': {
+                  display: 'inline',
+                  padding: `${theme('padding.1')} ${theme('padding.2')}`,
+                  margin: theme('margin.1'),
+                  borderRadius: theme('borderRadius.md'),
+                  border: 'none',
+                },
                 'blockquote > :last-child': {
                   marginBottom: 0,
                 },
@@ -54,16 +67,19 @@ module.exports = {
           light: {
             css: [
               {
-                color: theme('colors.gray.800'),
-                'h1': {
-                  borderColor: theme('colors.slate.300')
-                },
+                color: theme('colors.gray.700'),
                 'h1, h2, h3, h4, h5, h6': {
                   color: theme('colors.black'),
                 },
                 blockquote: {
-                  color: theme('colors.gray.500'),
                   backgroundColor: theme('colors.gray.100'),
+                },
+                'blockquote > p': {
+                  color: theme('colors.gray.500'),
+                },
+                'code:not(pre code)': {
+                  color: theme('colors.teal.500'),
+                  backgroundColor: theme('colors.gray.100')
                 },
               }
             ]
@@ -71,16 +87,19 @@ module.exports = {
           dark: {
             css: [
               {
-                color: theme('colors.gray.300'),
-                'h1': {
-                  borderColor: theme('colors.slate.700')
-                },
+                color: theme('colors.gray.400'),
                 'h1, h2, h3, h4, h5, h6': {
                   color: theme('colors.gray.200'),
                 },
                 blockquote: {
-                  color: theme('colors.blueGray.500'),
                   backgroundColor: theme('colors.gray.800'),
+                },
+                'blockquote > p': {
+                  color: theme('colors.slate.400'),
+                },
+                'code:not(pre code)': {
+                  color: theme('colors.teal.300'),
+                  backgroundColor: theme('colors.gray.700')
                 },
               }
             ]
