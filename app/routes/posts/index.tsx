@@ -1,8 +1,11 @@
-import { Link, useLoaderData } from 'remix';
-import { getPosts, PostListItem } from '~/utils/posts';
+import { json, Link, useLoaderData } from 'remix';
+import { PostListItem } from '~/utils/posts';
+
+import { db } from '~/utils/db.server';
 
 export const loader = async () => {
-  return getPosts();
+  const data = await db.post.findMany();
+  return json(data);
 };
 
 function Posts() {

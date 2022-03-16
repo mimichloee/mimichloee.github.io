@@ -8,3 +8,6 @@ node_modules
 /public/build
 /api/_build
 /app/styles/
+
+/prisma/dev.db
+.env
