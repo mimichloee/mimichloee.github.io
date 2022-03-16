@@ -18,17 +18,19 @@ type PostMarkdownAttributes = {
 
 export async function getPosts(): Promise<PostListItem[]> {
   const pathToPosts = `${__dirname}/../../posts`;
-  const allPostFiles = await fs.readdir(pathToPosts);
+  const allPostFiles = await fs.readdir(pathToPosts, {
+    withFileTypes: true,
+  });
 
   const posts = await Promise.all(
-    allPostFiles.map(async (filename) => {
-      const file = await fs.readFile(path.join(pathToPosts, filename));
+    allPostFiles.map(async (dirnet) => {
+      const file = await fs.readFile(path.join(pathToPosts, dirnet.name));
       const { attributes } = parseFrontMatter<PostMarkdownAttributes>(
         file.toString(),
       );
 
       return {
-        slug: filename.replace(/\.mdx$/, ''),
+        slug: dirnet.name.replace(/\.mdx$/, ''),
         title: attributes.title,
         date: attributes.date,
         excerpt: attributes.excerpt,
