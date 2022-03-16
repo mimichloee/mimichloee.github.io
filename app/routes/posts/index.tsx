@@ -1,5 +1,5 @@
+import { Post } from '@prisma/client';
 import { json, Link, useLoaderData } from 'remix';
-import { PostListItem } from '~/utils/posts';
 
 import { db } from '~/utils/db.server';
 
@@ -9,12 +9,12 @@ export const loader = async () => {
 };
 
 function Posts() {
-  const posts = useLoaderData<PostListItem[]>();
+  const posts = useLoaderData();
 
   return (
     <div className="p-8 relative max-w-5xl m-auto">
       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-        {posts.map((post: PostListItem) => (
+        {posts.map((post: Post) => (
           <Link to={post.slug} key={post.slug} className="pt-5 pb-5">
             <dl>
               <dt className="pb-7">
