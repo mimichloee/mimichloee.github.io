@@ -31,11 +31,11 @@ export default function PostSlug() {
       </p>
       <section className="pt-10 pb-15 md:pb-16 flex flex-col">
         <h1 className="pb-4 font-bold text-3xl md:text-4xl text-teal-500 dark:text-teal-400">
-          {post.frontmatter.title}
+          {post.title}
         </h1>
         <ul>
           <li className="font-small text-gray-400 dark:text-blueGray-500">
-            {post.frontmatter.date}
+            {post.date}
           </li>
         </ul>
       </section>
