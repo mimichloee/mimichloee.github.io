@@ -6,7 +6,6 @@ node_modules
 
 /build/
 /public/build
-/api/_build
 /app/styles/
 
 /prisma/dev.db
