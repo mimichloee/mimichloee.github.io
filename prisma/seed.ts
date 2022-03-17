@@ -20,17 +20,37 @@ async function seed() {
         file.toString(),
       );
 
-      await db.post.create({
-        data: {
-          slug: dirnet.name.replace(/\.mdx$/, ''),
-          title: attributes.title,
-          date: new Date(attributes.date),
-          excerpt: attributes.excerpt,
-          tags: attributes.tags.join(','),
-          content,
-          published: attributes.published,
-        },
-      });
+      const slug = dirnet.name.replace(/\.mdx$/, '');
+
+      const findPost = await db.post.findUnique({ where: { slug } });
+      if (findPost) {
+        await db.post.update({
+          where: {
+            slug,
+          },
+          data: {
+            slug,
+            title: attributes.title,
+            date: new Date(attributes.date),
+            excerpt: attributes.excerpt,
+            tags: attributes.tags.join(','),
+            content,
+            published: attributes.published,
+          },
+        });
+      } else {
+        await db.post.create({
+          data: {
+            slug,
+            title: attributes.title,
+            date: new Date(attributes.date),
+            excerpt: attributes.excerpt,
+            tags: attributes.tags.join(','),
+            content,
+            published: attributes.published,
+          },
+        });
+      }
     }
   });
 }
