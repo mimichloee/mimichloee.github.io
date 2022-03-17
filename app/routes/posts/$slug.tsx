@@ -7,13 +7,7 @@ import { LinksFunction, Link } from 'remix';
 import dark from 'prism-themes/themes/prism-material-oceanic.min.css';
 import postStyle from '~/styles/post.css';
 import { db } from '~/utils/db.server';
-
-interface PostItem {
-  slug: string;
-  title: string;
-  date: Date;
-  content: string;
-}
+import { Post } from '@prisma/client';
 
 export const loader = async ({ params }: any) => {
   const post = await db.post.findUnique({
@@ -44,7 +38,7 @@ export const links: LinksFunction = () => {
 };
 
 export default function PostSlug() {
-  const post = useLoaderData<PostItem>();
+  const post = useLoaderData<Post>();
   const Component = useMemo(
     () => getMDXComponent(post.content),
     [post.content],
