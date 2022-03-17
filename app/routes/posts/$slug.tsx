@@ -17,10 +17,13 @@ export const loader = async ({ params }: any) => {
   });
 
   if (!post) {
-    throw new Error('Post does not exist!');
+    throw new Response('Not Found', { status: 404 });
   }
 
   const content = await bundleMDXPost(post.content);
+  if (!content) {
+    throw new Response('Failed to compile blog post', { status: 500 });
+  }
 
   return {
     slug: params.slug,
