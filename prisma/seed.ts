@@ -28,6 +28,7 @@ async function seed() {
           excerpt: attributes.excerpt,
           tags: attributes.tags.join(','),
           content,
+          published: attributes.published,
         },
       });
     }

@@ -4,7 +4,11 @@ import { json, Link, useLoaderData } from 'remix';
 import { db } from '~/utils/db.server';
 
 export const loader = async () => {
-  const data = await db.post.findMany();
+  const data = await db.post.findMany({
+    where: {
+      published: true,
+    },
+  });
   return json(data);
 };
 
