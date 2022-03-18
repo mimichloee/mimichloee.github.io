@@ -5,6 +5,7 @@ import { getMDXComponent } from 'mdx-bundler/client';
 import { LinksFunction, Link } from 'remix';
 
 import postStyle from '~/styles/post.css';
+
 import { db } from '~/utils/db.server';
 import { Post } from '@prisma/client';
 

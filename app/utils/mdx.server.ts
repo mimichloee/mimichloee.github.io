@@ -1,19 +1,18 @@
 import { bundleMDX } from 'mdx-bundler';
-// import configureRehypePrettyCode from './rehype-pretty-code';
 
 export async function bundleMDXPost(content: string) {
+  const { default: remarkPrism } = await import('remark-prism');
   const { default: remarkSlug } = await import('remark-slug');
-
-  // const configuredRehypePrettyCode = await configureRehypePrettyCode();
 
   const { code, errors } = await bundleMDX({
     source: content,
     xdmOptions: (options) => {
-      options.remarkPlugins = [...(options?.remarkPlugins ?? []), remarkSlug];
-      options.rehypePlugins = [
-        ...(options?.rehypePlugins ?? []),
-        // configuredRehypePrettyCode,
+      options.remarkPlugins = [
+        ...(options?.remarkPlugins ?? []),
+        remarkPrism as any,
+        remarkSlug,
       ];
+      options.rehypePlugins = [...(options?.rehypePlugins ?? [])];
       return options;
     },
   });
