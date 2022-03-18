@@ -1,5 +1,5 @@
 import rehypePrettyCode, { Options } from 'rehype-pretty-code';
-import minDarkTheme from 'shiki/themes/min-dark.json';
+import minDarkTheme from '../themes/dark.json';
 
 async function configureRehypePrettyCode(): Promise<
   [typeof rehypePrettyCode, Partial<Options>]
