@@ -4,7 +4,6 @@ import { bundleMDXPost } from '~/utils/mdx.server';
 import { getMDXComponent } from 'mdx-bundler/client';
 import { LinksFunction, Link } from 'remix';
 
-import dark from 'prism-themes/themes/prism-material-oceanic.min.css';
 import postStyle from '~/styles/post.css';
 import { db } from '~/utils/db.server';
 import { Post } from '@prisma/client';
@@ -34,10 +33,7 @@ export const loader = async ({ params }: any) => {
 };
 
 export const links: LinksFunction = () => {
-  return [
-    { rel: 'stylesheet', href: dark },
-    { rel: 'stylesheet', href: postStyle },
-  ];
+  return [{ rel: 'stylesheet', href: postStyle }];
 };
 
 export default function PostSlug() {
