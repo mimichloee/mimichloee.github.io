@@ -1,32 +1,26 @@
 import { bundleMDX } from 'mdx-bundler';
-
-export type PostItem = {
-  slug: string;
-  code: string;
-  title: string;
-  date: Date;
-};
-
-export type PostMarkdownAttributes = {
-  title: string;
-};
+import configureRehypePrettyCode from './rehype-pretty-code';
 
 export async function bundleMDXPost(content: string) {
   const { default: remarkSlug } = await import('remark-slug');
-  const { default: remarkPrism } = await import('remark-prism');
 
-  const { code } = await bundleMDX({
+  const configuredRehypePrettyCode = await configureRehypePrettyCode();
+
+  const { code, errors } = await bundleMDX({
     source: content,
     xdmOptions: (options) => {
-      options.remarkPlugins = [
-        ...(options?.remarkPlugins ?? []),
-        remarkSlug,
-        remarkPrism as any,
+      options.remarkPlugins = [...(options?.remarkPlugins ?? []), remarkSlug];
+      options.rehypePlugins = [
+        ...(options?.rehypePlugins ?? []),
+        configuredRehypePrettyCode,
       ];
-      options.rehypePlugins = [...(options?.rehypePlugins ?? [])];
       return options;
     },
   });
+
+  if (errors.length > 0) {
+    throw new Error('mdx bundler error!');
+  }
 
   return code;
 }
