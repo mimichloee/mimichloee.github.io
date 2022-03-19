@@ -2,9 +2,9 @@ import { useLoaderData } from '@remix-run/react';
 import { useMemo } from 'react';
 import { bundleMDXPost } from '~/utils/mdx.server';
 import { getMDXComponent } from 'mdx-bundler/client';
-import { LinksFunction, Link } from 'remix';
+import { Link } from 'remix';
 
-import postStyle from '~/styles/$slug.css';
+// import postStyle from '~/styles/$slug.css';
 
 import { db } from '~/utils/db.server';
 import { Post } from '@prisma/client';
@@ -33,9 +33,9 @@ export const loader = async ({ params }: any) => {
   };
 };
 
-export const links: LinksFunction = () => {
-  return [{ rel: 'stylesheet', href: postStyle }];
-};
+// export const links: LinksFunction = () => {
+//   return [{ rel: 'stylesheet', href: postStyle }];
+// };
 
 export default function PostSlug() {
   const post = useLoaderData<Post>();
