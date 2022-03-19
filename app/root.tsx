@@ -9,7 +9,6 @@ import {
 } from 'remix';
 import type { MetaFunction } from 'remix';
 import tailwindStyle from './styles/tailwind.css';
-import layoutStyle from './styles/layout.css';
 import { NavBar, Footer } from './components';
 
 export const meta: MetaFunction = () => {
@@ -29,10 +28,6 @@ export const links: LinksFunction = () => {
     {
       rel: 'stylesheet',
       href: tailwindStyle,
-    },
-    {
-      rel: 'stylesheet',
-      href: layoutStyle,
     },
   ];
 };

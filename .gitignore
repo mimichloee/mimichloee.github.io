@@ -7,7 +7,7 @@ node_modules
 /build/
 /public/build
 /api/index.js
-/app/styles/
+/app/styles/tailwind.css
 
 /prisma/dev.db
 .env
