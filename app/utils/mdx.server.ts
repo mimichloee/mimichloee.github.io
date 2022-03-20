@@ -1,7 +1,7 @@
 import { bundleMDX } from 'mdx-bundler';
 
 export async function bundleMDXPost(content: string) {
-  const { default: rehypeHighlight } = await import('rehype-highlight');
+  const { default: rehypePrism } = await import('rehype-prism-plus');
   const { default: remarkSlug } = await import('remark-slug');
 
   const { code, errors } = await bundleMDX({
@@ -10,7 +10,7 @@ export async function bundleMDXPost(content: string) {
       options.remarkPlugins = [...(options?.remarkPlugins ?? []), remarkSlug];
       options.rehypePlugins = [
         ...(options?.rehypePlugins ?? []),
-        rehypeHighlight,
+        [rehypePrism, { ignoreMissing: true, showLineNumbers: true }],
       ];
       return options;
     },
