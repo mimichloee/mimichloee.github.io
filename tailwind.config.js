@@ -71,6 +71,9 @@ module.exports = {
                 'h1, h2, h3, h4, h5, h6': {
                   color: theme('colors.black'),
                 },
+                strong: {
+                  color: theme('colors.teal.500'),
+                },
                 blockquote: {
                   backgroundColor: theme('colors.gray.100'),
                 },
@@ -87,9 +90,12 @@ module.exports = {
           dark: {
             css: [
               {
-                color: theme('colors.gray.400'),
+                color: theme('colors.gray.300'),
                 'h1, h2, h3, h4, h5, h6': {
-                  color: theme('colors.gray.200'),
+                  color: theme('colors.white'),
+                },
+                strong: {
+                  color: theme('colors.teal.300'),
                 },
                 blockquote: {
                   backgroundColor: theme('colors.gray.800'),

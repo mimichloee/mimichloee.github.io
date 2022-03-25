@@ -1,54 +1,114 @@
 ---
 title: 'Sentry로 우아하게 에러 추적하기 (작성중)'
-date: '2022-02-25'
+date: '2022-03-02'
 excerpt: '장애는 항상 빠르게 감지되고 해소되어야한다. sentry를 이용하여 프론트엔드 에러를 빠르게 감지하고 추적할 수 있는 방법을 알아보자.'
-tags: ['react', 'sentry']
+tags: ['react', 'sentry', 'frontend']
 published: true
 ---
 
 # 장애(Incident)
 
-장애라는 단어는 겪을 때마다 적응이 안되는 단어이면서 상황이다.
-"페이지가 안떠요" 또는 "특정 디바이스에서 동작하지 않아요" 와 같은 CS를 받게 되면 심장박동이 크게 증가한다.
-혹여나 내가 작성한 코드가 잘못된 것이 아닐까 하는 조바심과 불안감 때문일 것이다.
-
+많은 개발자에게 장애라는 단어는 겪을 때마다 적응이 안되는 단어이면서 상황일 것이다.
 서비스를 제공하는 기업의 입장에서 대형 서비스 장애는 매출 하락으로 이어질 수도 있고 또한 사용자와 쌓아왔던 신뢰를 잃을 수도 있다.
-그만큼 장애 탐지와 대응은 신속하고 정확하게 이루어져야 한다. 장애 탐지와 대응은 backend 고유의 영역으로 여겨져 오기도 했던 것 같다.
+그만큼 장애 탐지와 대응은 신속하고 정확하게 이루어져야 한다.
 장애의 원인은 파악하기 전까진 인프라의 이슈인지 데이터의 이슈인지 화면의 이슈인지 알 수가 없다.
-(필자는 여러 가지 종류의 장애를 겪어봤는데 제일 기억에 남았던 장애는 내가 배치 배포를 제대로 안해서 다음날 사용자에게 push를 가게 만든 장애가 제일 기억에 남는다.)
+(여담이지만, 필자는 여러 가지 종류의 장애를 겪어봤는데 제일 기억에 남았던 장애는 내가 배치 배포를 제대로 안해서 다음날 사용자에게 push를 가게 만든 장애가 제일 기억에 남는다.)
 
-서비스의 복잡도가 증가하고 있는 요즘, frontend에서도 장애에 대한 탐지나 파악을 조금씩 깊히 들여다 봐야할 때가 오지 않았나 생각한다.
-그러면, frontend에서(특히 웹뷰환경)에서 발생하는 장애는 어떤 방법으로 탐지하고 파악하여 해결할 수 있을까?
+아무리 QA를 꼼꼼하게 마치고 배포된 시스템이라 하더라도 예상치 못한 원인으로 장애를 겪게 될 수도 있다.
 
-# 프론트엔드 장애
+그러면 프론트엔드에서 발생하는 오류를 어떻게 탐지하고 원인을 파악하여 대응할 수 있을까?
 
-프론트엔드에서 장애나 에러는 대부분 크게 `데이터영역`, `화면영역`의 두가지 상황에서 발생한다.
-물론 네트워크 이슈, OS 업데이트 또는 예상치 못한 런타임 에러도 충분히 발생할 수 있다.
-그러나, QA 과정을 거쳐 배포되는 시스템의 경우에는 대부분 이 두 가지 상황을 크게 벗어나지 않는다.
+# 프론트엔드에서의 오류
+
+프론트엔드에서 오류는 크게 `데이터영역`, `화면영역`의 두가지 상황에서 발생한다.
+두 가지 상황을 제외하면 네트워크 이슈나 특정 브라우저 버전, 단말기 OS 업데이트 또는 예상치 못한 런타임 오류나 외부요인에 의한 오류는 충분히 발생할 수 있다.
+크롬이 쿠키정책을 바꾼다거나 사파리 브라우저가 업데이트되면서 indexed db api 버그가 발생한다던가 하는 오류는 언제든지 발생할 수 있고
+개발자가 이런 오류를 예측하는 것은 어려운 일이다.
+
+클라이언트 사이드에서 발생하는 오류를 파악하려면 오류가 발생하는 해당 브라우저의 개발자 도구 콘솔을 통해 파악하거나
+오류가 발생하는 사용자의 디바이스와 동일한 조건을 가진 디바이스를 확보하여 재현해봄으로서 오류의 원인을 파악할 수 있다.
+그러나 사용자가 가지고 있는 디바이스나 버전은 매우 다양하고 오류가 발생할 때마다 해당 디바이스를 확보하기란 현실적인 어려움이 많고 번거롭다.
+그렇다고 개발자가 아닌 일반 사용자에게 아웃바운드를 통해 개발자 도구 콘솔을 통해 발생하는 오류를 알려달라고 할 수도 없을 것이다.
+또한 개발자 도구만으로 파악하기 쉽지 않은 오류도 충분히 발생할 수 있고 이러한 과정들은 장애 파악과 해소를 더디게 하여 장애 발생 시간을 길어지게 만든다.
+
+클라이언트사이드에서 발생하는 오류를 트래킹할 수 있다면 **오류를 신속하게 탐지하고 정확하게 원인을 파악하여 빠르게 대응**할 수 있지 않을까?
 
 # Sentry
 
-> Working Code, Happy Customers
+오류를 탐지하고 모니터링 하는 여러 가지 서비스가 존재한다. 그 중 [Sentry](https://sentry.io/for/frontend/)에 대해서 소개해보고자 한다.
 
 ![sentry](/images/sentry02.png)
 
+> Working Code, Happy Customers.
+>
+> Your code is telling you more than what your logs let on. Sentry’s frontend monitoring gives you full visibility into your code, so you can catch issues before they become downtime.
+
+Sentry는 **실시간 로그 취합 및 분석 도구이자 모니터링 플랫폼**이다.
+로그에 대해 다양한 정보를 제공하며 이벤트별, 타임라인으로 얼마나 많은 이벤트가 발생하는지 알 수 있고 설정에 따라 알림을 받을 수 있도록 해준다.
+그리고 로그를 수집하는데서 그치지 않고 시각화 도구를 통해 발생한 로그들에 대해서 쉽게 분석할 수 있도록 도와주며 다양한 플랫폼을 지원한다.
+
+그러면, Sentry의 주요 기능에 대해서 간략하게 알아보자.
+
+### 로그에 대한 다양한 정보 제공
+
+Sentry는 발생한 이벤트 로그에 대해 다양한 정보를 제공한다.
+
+- **Exception & Message**: 이벤트 로그 메세지 및 코드 라인 정보 (source map 설정을 해야 정확한 코드라인 파악 가능)
+- **Device**: 이벤트가 발생한 장비 정보 (name, family, model, memory 등)
+- **Browser**: 이벤트가 발생한 브라우저 정보 (name, version 등)
+- **OS**: 이벤트가 발생한 OS 정보 (name, version, build, kernelVersion 등)
+- **Breadcrumbs**: 이벤트가 발생한 과정
+
+위와 같이 기본적으로 제공되는 정보들 뿐만 아니라 context기능을 통해 특정 이벤트에 대한 추가적인 정보를 수집할 수도 있다.
+
+### 비슷한 오류를 통합
+
+Sentry는 [Issue Grouping](https://docs.sentry.io/product/data-management-settings/event-grouping/) 기능을 통해 비슷한 이벤트 로그를
+하나의 이슈로 통합한다. 이는 비슷한 오류를 파악하고 추적하는데에 있어 큰 도움이 된다.
+
+### 다양한 플랫폼 지원
+
+프론트엔드 뿐만 아니라 .NET, Android, Apple(Cocoa), Go, Java, Kotlin, Python 등의 다양한 플랫폼을 지원한다.
+자세한 정보는 [공식홈페이지](https://sentry.io/platforms/)에서 확인할 수 있다.
+
+### 다양한 알림 채널 지원
+
+Sentry에서는 이슈에 대해 알림을 받을 수 있도록 slack, teams, jira, github등 [다양한 채널](https://docs.sentry.io/product/integrations/)을 지원한다.
+
+# 본격적으로 데이터 쌓기
+
 ```sh
-npm i react
+// using npm
+npm i @sentry/react @sentry/tracing
+
+// using yarn
+yarn add @sentry/react @sentry/tracing
 ```
 
 ```ts
-import * as Sentry from '@sentry/browser';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import * as Sentry from '@sentry/react';
+import { BrowserTracing } from '@sentry/tracing';
+import App from './App';
 
-export function initSentry() {
-  Sentry.init({
-    dsn: 'dsn key',
-    release: 'release version',
-    environment: 'production',
-    integrations: [
-      new Sentry.Integrations.Breadcrumbs({
-        console: true,
-      }),
-    ],
-  });
-}
+Sentry.init({
+  dsn: 'dsn key',
+  release: 'release version',
+  environment: 'production',
+  normalizeDepth: 6,
+  integrations: [
+    new Sentry.Integrations.Breadcrumbs({
+      console: true,
+    }),
+    new BrowserTracing(),
+  ],
+});
+
+ReactDOM.render(<App />, document.getElementById('root'));
 ```
+
+설정에 필요한 기본 정보는 다음과 같다.
+
+- dsn: 이벤트를 전송하기 위한 식별 키
+- release: 어플리케이션의 버전 (보통 package.json에 명시한 버전을 사용, 버전별 오류 추적이 용이함)
