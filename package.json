@@ -1,7 +1,8 @@
 {
   "private": true,
-  "name": "remix-app-template",
-  "description": "",
+  "name": "mimichloee.github.io",
+  "description": "chloe's personal tech blog repository",
+  "main": "index.js",
   "license": "",
   "scripts": {
     "postinstall": "remix setup node",
