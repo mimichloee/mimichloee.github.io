@@ -34,7 +34,7 @@ export const loader = async ({ params }: any) => {
 };
 
 export const links: LinksFunction = () => {
-  return [{ rel: 'preload', href: styles, as: 'style' }];
+  return [{ rel: 'stylesheet', href: styles, as: 'style' }];
 };
 
 export default function PostSlug() {
