@@ -8,8 +8,11 @@ import {
   ScrollRestoration,
 } from 'remix';
 import type { MetaFunction } from 'remix';
-import tailwindStyle from './styles/tailwind.css';
+
 import { NavBar, Footer } from './components';
+
+import tailwindStyle from './styles/tailwind.css';
+import layoutStyle from './styles/layout.css';
 
 export const meta: MetaFunction = () => {
   return { title: 'Chloe Tech Blog' };
@@ -28,6 +31,10 @@ export const links: LinksFunction = () => {
     {
       rel: 'stylesheet',
       href: tailwindStyle,
+    },
+    {
+      rel: 'stylesheet',
+      href: layoutStyle,
     },
   ];
 };

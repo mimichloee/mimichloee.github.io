@@ -34,14 +34,22 @@ module.exports = {
                     fontSize: theme('fontSize.xl'),
                   },
                 },
+                a: {
+                  textDecoration: 'none'
+                },
+                'a:hover, a:focus': {
+                  textDecoration: 'underline',
+                  outline: 'none',
+                },
                 p: {
                   letterSpacing: '-0.3px',
-                  marginTop: 0,
-                  marginBottom: theme('spacing.8'),
+                  lineHeight: '1.8rem',
+                  marginTop: theme('spacing.4'),
+                  marginBottom: theme('spacing.4'),
                 },
                 blockquote: {
                   fontWeight: theme('fontWeight.normal'),
-                  border: 'none',
+                  borderLeftWidth: '4px',
                   borderRadius: theme('borderRadius.lg'),
                   padding: theme('spacing.4'),
                   marginTop: 0,
@@ -55,8 +63,8 @@ module.exports = {
                   display: 'inline',
                   padding: `${theme('padding.1')} ${theme('padding.2')}`,
                   margin: theme('margin.1'),
-                  borderRadius: theme('borderRadius.md'),
                   border: 'none',
+                  borderRadius: theme('borderRadius.md')
                 },
                 'blockquote > :last-child': {
                   marginBottom: 0,
@@ -71,10 +79,14 @@ module.exports = {
                 'h1, h2, h3, h4, h5, h6': {
                   color: theme('colors.black'),
                 },
+                a: {
+                  color: theme('colors.sky.600')
+                },
                 strong: {
                   color: theme('colors.teal.500'),
                 },
                 blockquote: {
+                  borderLeftColor: theme('colors.teal.500'),
                   backgroundColor: theme('colors.gray.100'),
                 },
                 'blockquote > p': {
@@ -94,10 +106,14 @@ module.exports = {
                 'h1, h2, h3, h4, h5, h6': {
                   color: theme('colors.white'),
                 },
+                a: {
+                  color: theme('colors.sky.400')
+                },
                 strong: {
                   color: theme('colors.teal.300'),
                 },
                 blockquote: {
+                  borderLeftColor: theme('colors.teal.300'),
                   backgroundColor: theme('colors.gray.800'),
                 },
                 'blockquote > p': {

@@ -210,3 +210,8 @@ pre[class*='language-'] {
 .token.variable {
   color: #f07178;
 }
+
+.prose ul li {
+  margin: 0.2rem 0;
+  line-height: 1.6rem;
+}
