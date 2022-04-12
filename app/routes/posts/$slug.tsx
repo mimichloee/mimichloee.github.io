@@ -1,8 +1,6 @@
 import { useLoaderData } from '@remix-run/react';
-import { useMemo } from 'react';
-import { bundleMDXPost } from '~/utils/mdx.server';
-import { getMDXComponent } from 'mdx-bundler/client';
 import { Link, LinksFunction } from 'remix';
+import { marked } from 'marked';
 
 import styles from '~/styles/$slug.css';
 
@@ -20,7 +18,7 @@ export const loader = async ({ params }: any) => {
     throw new Response('Not Found', { status: 404 });
   }
 
-  const content = await bundleMDXPost(post.content);
+  const content = marked(post.content);
   if (!content) {
     throw new Response('Failed to compile blog post', { status: 500 });
   }
@@ -39,10 +37,6 @@ export const links: LinksFunction = () => {
 
 export default function PostSlug() {
   const post = useLoaderData<Post>();
-  const Component = useMemo(
-    () => getMDXComponent(post.content),
-    [post.content],
-  );
 
   return (
     <div className="p-8 relative max-w-5xl m-auto">
@@ -61,7 +55,7 @@ export default function PostSlug() {
       </section>
       <section>
         <article className="prose max-w-none prose-light dark:prose-dark">
-          <Component />
+          <div dangerouslySetInnerHTML={{ __html: post.content }} />
         </article>
       </section>
     </div>
